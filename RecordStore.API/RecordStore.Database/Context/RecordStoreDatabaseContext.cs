@@ -50,6 +50,41 @@ namespace RecordStore.Database.Context
             modelBuilder.Entity<Review>()
                 .HasIndex(r => new { r.UserId, r.RecordId })
                 .IsUnique();
+
+            modelBuilder.Entity<Artist>()
+                .HasMany(a => a.ArtistRecords)
+                .WithOne(ar => ar.Artist)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Record>()
+                .HasMany(r => r.ArtistRecords)
+                .WithOne(ar => ar.Record)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.OrderRecords)
+                .WithOne(or => or.Order)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Record>()
+                .HasMany(r => r.OrderRecords)
+                .WithOne(or => or.Record)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Orders)
+                .WithOne(rev => rev.User)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Reviews)
+                .WithOne(rev => rev.User)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Record>()
+                .HasMany(r => r.Reviews)
+                .WithOne(rev => rev.Record)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
