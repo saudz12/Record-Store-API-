@@ -25,4 +25,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RecordStore.Database\RecordStore.Database.csproj" />
+  </ItemGroup>
+
 </Project>

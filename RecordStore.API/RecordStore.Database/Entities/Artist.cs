@@ -11,6 +11,7 @@ namespace RecordStore.Database.Entities
     public class Artist : BaseEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ArtistId { get; set; }
 
         [Required]

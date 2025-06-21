@@ -11,6 +11,7 @@ namespace RecordStore.Database.Entities
     public class OrderRecord : BaseEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public int OrderId { get; set; }

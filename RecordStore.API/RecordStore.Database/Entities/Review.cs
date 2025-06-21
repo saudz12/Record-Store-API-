@@ -11,6 +11,7 @@ namespace RecordStore.Database.Entities
     public class Review : BaseEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ReviewId { get; set; }
 
         public int UserId { get; set; }

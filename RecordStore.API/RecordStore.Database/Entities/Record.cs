@@ -11,6 +11,7 @@ namespace RecordStore.Database.Entities
     public class Record : BaseEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RecordId { get; set; }
 
         [Required]

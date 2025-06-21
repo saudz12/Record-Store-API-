@@ -56,7 +56,7 @@ namespace RecordStore.Database.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("data source=localhost;Initial Catalog=DbEx;Persist Security Info=True;User ID=saudshaikh;Password=saudshaikh720;Connection Timeout=60;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("data source=localhost;Initial Catalog=RecordStore;Persist Security Info=True;User ID=recordstoreDAWM;Password=1q2w3e;Connection Timeout=60;TrustServerCertificate=True");
             }
         }
     }

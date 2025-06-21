@@ -11,6 +11,7 @@ namespace RecordStore.Database.Entities
     public class Inventory : BaseEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public int RecordId { get; set; }
