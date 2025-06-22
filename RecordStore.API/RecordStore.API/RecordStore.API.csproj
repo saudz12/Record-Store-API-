@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\RecordStore.Core\RecordStore.Core.csproj" />
     <ProjectReference Include="..\RecordStore.Database\RecordStore.Database.csproj" />
     <ProjectReference Include="..\RecordStore.Infrastructure\RecordStore.Infrastructure.csproj" />
