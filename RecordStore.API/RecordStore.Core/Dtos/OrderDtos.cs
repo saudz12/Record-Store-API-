@@ -23,30 +23,4 @@ namespace RecordStore.Core.Dtos
         public int UserId { get; set; }
         public List<CreateOrderRecordDto> OrderRecords { get; set; } = new List<CreateOrderRecordDto>();
     }
-
-    public class OrderRecordDto
-    {
-        public int RecordId { get; set; }
-        public string RecordName { get; set; }
-        public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
-        public decimal SubTotal { get; set; }
-    }
-
-    public class CreateOrderRecordDto
-    {
-        [Required]
-        public int RecordId { get; set; }
-        [Required]
-        [Range(1, int.MaxValue)]
-        public int Quantity { get; set; }
-    }
-
-    public class UpdateOrderRecordDto
-    {
-        [Required]
-        public int RecordId { get; set; }
-        [Range(1, int.MaxValue)]
-        public int? Quantity { get; set; }
-    }
 }

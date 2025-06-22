@@ -56,6 +56,36 @@ namespace RecordStore.Core.Mapping
                 .ForMember(dest => dest.RecordName, opt => opt.MapFrom(src => src.Record.Name))
                 .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Record.Inventories.FirstOrDefault().Price))
                 .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Quantity * src.Record.Inventories.FirstOrDefault().Price));
+
+            CreateMap<Review, ReviewDto>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Name))
+                .ForMember(dest => dest.RecordName, opt => opt.MapFrom(src => src.Record.Name));
+
+            CreateMap<CreateReviewDto, Review>();
+
+            CreateMap<UpdateReviewDto, Review>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            // ArtistRecord Management mappings
+            CreateMap<ArtistRecord, ArtistRecordDto>()
+                .ForMember(dest => dest.ArtistName, opt => opt.MapFrom(src => src.Artist.Name))
+                .ForMember(dest => dest.RecordName, opt => opt.MapFrom(src => src.Record.Name));
+
+            CreateMap<CreateArtistRecordDto, ArtistRecord>();
+
+            CreateMap<UpdateArtistRecordDto, ArtistRecord>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            // OrderRecord Management mappings
+            CreateMap<OrderRecord, OrderRecordDto>()
+                .ForMember(dest => dest.RecordName, opt => opt.MapFrom(src => src.Record.Name))
+                .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Record.Inventories.FirstOrDefault().Price))
+                .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Quantity * src.Record.Inventories.FirstOrDefault().Price));
+
+            CreateMap<CreateOrderRecordDto, OrderRecord>();
+
+            CreateMap<UpdateOrderRecordDto, OrderRecord>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }

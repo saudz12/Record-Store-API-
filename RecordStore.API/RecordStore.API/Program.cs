@@ -30,6 +30,15 @@ builder.Services.AddScoped<IArtistService, ArtistService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInventoryService, InventoryService>();
 
+// Repository registrations (add to existing ones)
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IArtistRecordRepository, ArtistRecordRepository>();
+builder.Services.AddScoped<IOrderRecordRepository, OrderRecordRepository>();
+
+// Service registrations (add to existing ones)
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IArtistRecordService, ArtistRecordService>();
+builder.Services.AddScoped<IOrderRecordService, OrderRecordService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

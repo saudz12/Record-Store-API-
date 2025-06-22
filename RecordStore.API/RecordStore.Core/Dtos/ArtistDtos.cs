@@ -23,28 +23,7 @@ namespace RecordStore.Core.Dtos
 
     public class UpdateArtistDto
     {
-        public string Name { get; set; }
-        public string Label { get; set; }
-    }
-
-    public class ArtistRecordDto
-    {
-        public int ArtistId { get; set; }
-        public string ArtistName { get; set; }
-        public string Role { get; set; }
-    }
-
-    public class CreateArtistRecordDto
-    {
-        [Required]
-        public int RecordId { get; set; }
-        [Required]
-        public int ArtistId { get; set; }
-        public string Role { get; set; }
-    }
-
-    public class UpdateArtistRecordDto
-    {
-        public string? Role { get; set; }
+        public string? Name { get; set; }
+        public string? Label { get; set; }
     }
 }
