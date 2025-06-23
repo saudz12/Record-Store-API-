@@ -3,6 +3,7 @@ using RecordStore.Core.Dtos;
 using RecordStore.Core.Services.Interfaces;
 using RecordStore.Database.Entities;
 using RecordStore.Database.Repositories.Interfaces;
+using RecordStore.Infrastructure.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,7 @@ namespace RecordStore.Core.Services
         public async Task<InventoryDto> UpdateInventoryAsync(int id, UpdateInventoryDto updateInventoryDto)
         {
             var existingInventory = await _inventoryRepository.GetByIdAsync(id);
-            if (existingInventory == null) return null;
+            if (existingInventory == null) throw new RecordNotFoundException(id);
 
             _mapper.Map(updateInventoryDto, existingInventory);
             var updatedInventory = await _inventoryRepository.UpdateAsync(existingInventory);

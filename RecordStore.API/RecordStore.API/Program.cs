@@ -13,6 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
+using RecordStore.Infrastructure.Middlewares;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -104,6 +106,10 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
+app.UseMiddleware<IdValidationMiddleware>();
+
 
 if (app.Environment.IsDevelopment())
 {
