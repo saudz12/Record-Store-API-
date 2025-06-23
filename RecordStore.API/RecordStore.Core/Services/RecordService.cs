@@ -28,6 +28,14 @@ namespace RecordStore.Core.Services
             return _mapper.Map<IEnumerable<RecordDto>>(records);
         }
 
+        public async Task<PagedResultDto<RecordDto>> GetRecordsAsync(RecordQueryDto query)
+        {
+            var (records, totalCount) = await _recordRepository.GetRecordsAsync(query);
+            var recordDtos = _mapper.Map<IEnumerable<RecordDto>>(records);
+
+            return new PagedResultDto<RecordDto>(recordDtos, query.Page, query.PageSize, totalCount);
+        }
+
         public async Task<RecordDto> GetRecordByIdAsync(int id)
         {
             var record = await _recordRepository.GetByIdAsync(id);

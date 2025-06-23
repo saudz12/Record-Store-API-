@@ -16,6 +16,16 @@ namespace RecordStore.API.Controllers
             _recordService = recordService;
         }
 
+        [HttpGet("query")]
+        public async Task<ActionResult<PagedResultDto<RecordDto>>> GetRecordsWithQuery([FromQuery] RecordQueryDto query)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _recordService.GetRecordsAsync(query);
+            return Ok(result);
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RecordDto>>> GetRecords()
         {
