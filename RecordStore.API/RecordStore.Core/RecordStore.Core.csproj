@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RecordStore.Database\RecordStore.Database.csproj" />
+    <ProjectReference Include="..\RecordStore.Infrastructure\RecordStore.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

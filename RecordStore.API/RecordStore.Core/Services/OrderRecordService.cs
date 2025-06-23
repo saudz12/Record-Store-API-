@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RecordStore.Core.Services.Interfaces;
+using RecordStore.Infrastructure.Exceptions;
 
 namespace RecordStore.Core.Services
 {
@@ -57,14 +58,12 @@ namespace RecordStore.Core.Services
 
         public async Task<OrderRecordDto> CreateOrderRecordAsync(CreateOrderRecordDto createDto)
         {
-            // check if item already exists in order
             var existing = await _orderRecordRepository.GetByOrderAndRecordAsync(createDto.OrderId, createDto.RecordId);
             if (existing != null)
             {
                 throw new InvalidOperationException("Record is already in this order");
             }
 
-            // check inventory availability
             var inventory = await _inventoryRepository.GetByRecordIdAsync(createDto.RecordId);
             if (inventory == null || inventory.Quantity < createDto.Quantity)
             {
@@ -74,7 +73,6 @@ namespace RecordStore.Core.Services
             var orderRecord = _mapper.Map<OrderRecord>(createDto);
             var created = await _orderRecordRepository.CreateAsync(orderRecord);
 
-            // update inventory
             inventory.Quantity -= createDto.Quantity;
             await _inventoryRepository.UpdateAsync(inventory);
 
@@ -84,7 +82,7 @@ namespace RecordStore.Core.Services
         public async Task<OrderRecordDto> UpdateOrderRecordAsync(int id, UpdateOrderRecordDto updateDto)
         {
             var existing = await _orderRecordRepository.GetByIdAsync(id);
-            if (existing == null) return null;
+            if (existing == null) throw new RecordNotFoundException(id);
 
             if (updateDto.Quantity.HasValue)
             {
@@ -96,7 +94,6 @@ namespace RecordStore.Core.Services
                     throw new InvalidOperationException("Insufficient stock for quantity increase");
                 }
 
-                // Update inventory
                 inventory.Quantity -= quantityDifference;
                 await _inventoryRepository.UpdateAsync(inventory);
             }
@@ -109,9 +106,8 @@ namespace RecordStore.Core.Services
         public async Task<bool> DeleteOrderRecordAsync(int id)
         {
             var orderRecord = await _orderRecordRepository.GetByIdAsync(id);
-            if (orderRecord == null) return false;
+            if (orderRecord == null) throw new RecordNotFoundException(id);
 
-            // return stock to inventory
             var inventory = await _inventoryRepository.GetByRecordIdAsync(orderRecord.RecordId);
             if (inventory != null)
             {
@@ -125,9 +121,8 @@ namespace RecordStore.Core.Services
         public async Task<bool> RemoveRecordFromOrderAsync(int orderId, int recordId)
         {
             var orderRecord = await _orderRecordRepository.GetByOrderAndRecordAsync(orderId, recordId);
-            if (orderRecord == null) return false;
+            if (orderRecord == null) throw new RecordNotFoundException(orderId);
 
-            // return stock to inventory
             var inventory = await _inventoryRepository.GetByRecordIdAsync(recordId);
             if (inventory != null)
             {

@@ -3,6 +3,7 @@ using RecordStore.Core.Dtos;
 using RecordStore.Core.Services.Interfaces;
 using RecordStore.Database.Entities;
 using RecordStore.Database.Repositories.Interfaces;
+using RecordStore.Infrastructure.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,18 +34,20 @@ namespace RecordStore.Core.Services
         public async Task<OrderDto> GetOrderByIdAsync(int id)
         {
             var order = await _orderRepository.GetByIdAsync(id);
+            if (order == null)
+                throw new OrderNotFoundException(id);
             return _mapper.Map<OrderDto>(order);
         }
 
         public async Task<IEnumerable<OrderDto>> GetOrdersByUserIdAsync(int userId)
         {
             var orders = await _orderRepository.GetByUserIdAsync(userId);
+            
             return _mapper.Map<IEnumerable<OrderDto>>(orders);
         }
 
         public async Task<OrderDto> CreateOrderAsync(CreateOrderDto createOrderDto)
         {
-            // Validate inventory availability
             foreach (var item in createOrderDto.OrderRecords)
             {
                 var inventory = await _inventoryRepository.GetByRecordIdAsync(item.RecordId);
@@ -67,7 +70,6 @@ namespace RecordStore.Core.Services
 
             var createdOrder = await _orderRepository.CreateAsync(order);
 
-            // Update inventory
             foreach (var item in createOrderDto.OrderRecords)
             {
                 var inventory = await _inventoryRepository.GetByRecordIdAsync(item.RecordId);
