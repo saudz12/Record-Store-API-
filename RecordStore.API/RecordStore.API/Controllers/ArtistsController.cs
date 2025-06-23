@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RecordStore.Core.Dtos;
 using RecordStore.Core.Services.Interfaces;
 
 namespace RecordStore.API.Controllers
 {
+    
     [ApiController]
     [Route("api/[controller]")]
     public class ArtistsController : ControllerBase
@@ -33,6 +35,7 @@ namespace RecordStore.API.Controllers
             return Ok(artist);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ArtistDto>> CreateArtist(CreateArtistDto createArtistDto)
         {
@@ -40,6 +43,7 @@ namespace RecordStore.API.Controllers
             return CreatedAtAction(nameof(GetArtist), new { id = artist.ArtistId }, artist);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<ArtistDto>> UpdateArtist(int id, UpdateArtistDto updateArtistDto)
         {
@@ -50,6 +54,7 @@ namespace RecordStore.API.Controllers
             return Ok(artist);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteArtist(int id)
         {

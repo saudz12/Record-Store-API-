@@ -7,6 +7,7 @@ using RecordStore.Database.Entities;
 
 namespace RecordStore.API.Controllers
 {
+    
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
