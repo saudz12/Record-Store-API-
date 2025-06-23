@@ -16,5 +16,6 @@ namespace RecordStore.Core.Services.Interfaces
         Task<bool> DeleteRecordAsync(int id);
         Task<IEnumerable<RecordDto>> GetRecordsByGenreAsync(string genre);
         Task<IEnumerable<RecordDto>> SearchRecordsAsync(string searchTerm);
+        Task<PagedResultDto<RecordDto>> GetRecordsAsync(RecordQueryDto query);
     }
 }

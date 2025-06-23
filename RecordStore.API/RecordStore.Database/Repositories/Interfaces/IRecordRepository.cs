@@ -1,4 +1,5 @@
-﻿using RecordStore.Database.Entities;
+﻿using RecordStore.Core.Dtos;
+using RecordStore.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace RecordStore.Database.Repositories.Interfaces
         Task<bool> DeleteAsync(int id);
         Task<IEnumerable<Record>> GetByGenreAsync(string genre);
         Task<IEnumerable<Record>> SearchAsync(string searchTerm);
+        Task<(IEnumerable<Record> Records, int TotalCount)> GetRecordsAsync(RecordQueryDto query);
     }
 }
