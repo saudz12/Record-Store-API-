@@ -17,7 +17,7 @@ namespace RecordStore.Database.Entities
         public int UserId { get; set; }
         public int RecordId { get; set; }
         [Column(TypeName = "decimal(2,1)")]
-        public int Rating {  get; set; }
+        public decimal Rating {  get; set; }
         [MaxLength(500)]
         public string Message { get; set; }
 
