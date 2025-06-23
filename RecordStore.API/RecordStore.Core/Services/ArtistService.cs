@@ -3,6 +3,7 @@ using RecordStore.Core.Dtos;
 using RecordStore.Core.Services.Interfaces;
 using RecordStore.Database.Entities;
 using RecordStore.Database.Repositories.Interfaces;
+using RecordStore.Infrastructure.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,8 @@ namespace RecordStore.Core.Services
         public async Task<ArtistDto> UpdateArtistAsync(int id, UpdateArtistDto updateArtistDto)
         {
             var existingArtist = await _artistRepository.GetByIdAsync(id);
-            if (existingArtist == null) return null;
+            if (existingArtist == null)
+                throw new ArtistNotFoundException(id);
 
             _mapper.Map(updateArtistDto, existingArtist);
             var updatedArtist = await _artistRepository.UpdateAsync(existingArtist);

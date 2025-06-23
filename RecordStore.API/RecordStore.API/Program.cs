@@ -11,6 +11,7 @@ using RecordStore.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RecordStore.Infrastructure.Middlewares;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -102,6 +103,10 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
+app.UseMiddleware<IdValidationMiddleware>();
+
 
 if (app.Environment.IsDevelopment())
 {

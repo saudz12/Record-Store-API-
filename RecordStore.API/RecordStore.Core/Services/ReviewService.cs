@@ -2,6 +2,7 @@
 using RecordStore.Core.Dtos;
 using RecordStore.Core.Services.Interfaces;
 using RecordStore.Database.Entities;
+using RecordStore.Infrastructure.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +54,6 @@ namespace RecordStore.Core.Services
 
         public async Task<ReviewDto> CreateReviewAsync(CreateReviewDto createReviewDto)
         {
-            // Check if user already reviewed this record
             var existingReview = await _reviewRepository.GetByUserAndRecordAsync(createReviewDto.UserId, createReviewDto.RecordId);
             if (existingReview != null)
             {
@@ -68,7 +68,7 @@ namespace RecordStore.Core.Services
         public async Task<ReviewDto> UpdateReviewAsync(int id, UpdateReviewDto updateReviewDto)
         {
             var existingReview = await _reviewRepository.GetByIdAsync(id);
-            if (existingReview == null) return null;
+            if (existingReview == null) throw new RecordNotFoundException(id);
 
             _mapper.Map(updateReviewDto, existingReview);
             var updatedReview = await _reviewRepository.UpdateAsync(existingReview);
