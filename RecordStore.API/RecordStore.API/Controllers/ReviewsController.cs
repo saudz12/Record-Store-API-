@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using RecordStore.Core.Dtos;
 using RecordStore.Core.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RecordStore.API.Controllers
 {
+    
     [ApiController]
     [Route("api/[controller]")]
     public class ReviewsController : ControllerBase
@@ -64,6 +66,7 @@ namespace RecordStore.API.Controllers
             return Ok(averageRating);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ReviewDto>> CreateReview(CreateReviewDto createReviewDto)
         {
@@ -78,6 +81,7 @@ namespace RecordStore.API.Controllers
             }
         }
 
+        [Authorize]
         [HttpPatch("{id}")]
         public async Task<ActionResult<ReviewDto>> UpdateReview(int id, UpdateReviewDto updateReviewDto)
         {
@@ -88,6 +92,7 @@ namespace RecordStore.API.Controllers
             return Ok(review);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteReview(int id)
         {

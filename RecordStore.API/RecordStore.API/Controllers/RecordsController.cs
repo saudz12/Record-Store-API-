@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using RecordStore.Core.Dtos;
 using RecordStore.Core.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RecordStore.API.Controllers
 {
+    
     [ApiController]
     [Route("api/[controller]")]
     public class RecordsController : ControllerBase
@@ -60,6 +62,7 @@ namespace RecordStore.API.Controllers
             return Ok(records);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<RecordDto>> CreateRecord(CreateRecordDto createRecordDto)
         {
@@ -67,6 +70,7 @@ namespace RecordStore.API.Controllers
             return CreatedAtAction(nameof(GetRecord), new { id = record.RecordId }, record);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<RecordDto>> UpdateRecord(int id, UpdateRecordDto updateRecordDto)
         {
@@ -77,6 +81,7 @@ namespace RecordStore.API.Controllers
             return Ok(record);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteRecord(int id)
         {

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RecordStore.Core.Dtos;
 using RecordStore.Core.Services.Interfaces;
 
 namespace RecordStore.API.Controllers
 {
+    
     [ApiController]
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase
@@ -40,6 +42,7 @@ namespace RecordStore.API.Controllers
             return Ok(orders);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<OrderDto>> CreateOrder(CreateOrderDto createOrderDto)
         {
@@ -54,6 +57,7 @@ namespace RecordStore.API.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteOrder(int id)
         {

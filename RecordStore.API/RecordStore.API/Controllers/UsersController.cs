@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecordStore.Core.Dtos;
 using RecordStore.Core.Services.Interfaces;
@@ -43,6 +43,7 @@ namespace RecordStore.API.Controllers
             return Ok(user);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto createUserDto)
         {
@@ -50,6 +51,7 @@ namespace RecordStore.API.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<UserDto>> UpdateUser(int id, UpdateUserDto updateUserDto)
         {
@@ -60,6 +62,7 @@ namespace RecordStore.API.Controllers
             return Ok(user);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {

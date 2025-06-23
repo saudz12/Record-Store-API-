@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -37,6 +38,7 @@ namespace RecordStore.Infrastructure.Services
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
@@ -47,8 +49,9 @@ namespace RecordStore.Infrastructure.Services
                 }),
                 Expires = DateTime.UtcNow.AddHours(_configuration.GetValue<double>("Jwt:TokenLifetimeHours", 1)),
                 Issuer = _configuration["Jwt:Issuer"],
-                Audience = _configuration["Jwt:Audience"]
-                // Aici in mod normal puneam credentialele de sign-in, dar pentru simplitate nu le mai adaug
+                Audience = _configuration["Jwt:Audience"],
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
